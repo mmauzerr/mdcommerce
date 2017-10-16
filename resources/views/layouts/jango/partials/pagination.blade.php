@@ -1,0 +1,1 @@
+{{ $posts->appends(request()->all())->links('layouts.partial-jango.pagination-html') }}

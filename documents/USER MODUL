@@ -1,0 +1,82 @@
+--- OPIS MODULA ---
+Ovaj mogul u sebi ima ceo CRUD za administratore, login stranicu, stranicu za zaboravljenu lozinku i stranicu za promenu lozinke
+
+
+Koraci:
+1. Kreirati prazan projekat
+2. Podesiti parametre konekcije na bazu
+3. Izvrsiti migraciju
+    a) ako se desi greska pri migraciji uraditi fix koji u AppServiceProvider setuje default string lenght
+4. Iseckati "admin" layout
+    a) uvezati "cisti" (bez ikakve logike) html na stranicama - rutama: 
+        "/users/login" (UsersController@login) - ovde se vidi iz admin templejta "login.html" stranica
+        "/users/welcome" (UsersController@welcome) - ovde se vidi iz admin templejta "blank.html" stranica
+        "/users/create" (UsersController@create) - ovde se vidi iz admin templejta "forms.html" stranica sa poljima koje poseduje jedan admin korisnik
+Pauza
+5. Iseckati "laravel" layout
+    a) uvezati "cisti" (bez ikakve logike) html na stranicama - rutama: 
+        "/" (IndexController@index) - ovde se vidi iz html iz default laravelove view skripte "welcome.blade.php"
+6. Default admin korisnici:
+    a) napraviti migraciju koja prosiruje users tabelu za sledeca polja: address (varchar 255 - NULL), phone (varchar 255, NULL), 
+    role (varchar 20, NOT NULL). Pokrenuti migraciju 
+    b) napraviti i pokrenuti seed koji unosi jednog default korisnika sa sledecim podacima:
+    name = "Aleksandar Stanojevic"
+    email = "aleksandar.stanojevic@cubes.rs"
+    password = bcrypt('cubes')
+    address = "Bulevar Mihajla Pupina 181, Beograd"
+    phone = "123 456 789"
+7. Napraviti login funkcionalnost koja funkcionise na sledeci nacin:
+    a) get zahtev - prikazuje login formu
+    b) post zahtev - vrsi validaciju zahteva (email - obavezan i email, password - obavezan). Ukoliko ne prodje request
+    prikazati poruke na login stranici. Ukoliko prodje validaciju pokusati login korisnika. Ako je uspesan login redirektovati 
+    ga na "/users/welcome" stranicu (rutu), a ako nije setovati gresku za polje 'email' => 'Vas email/lozinka nisu pronadjeni' i 
+    takodje obezbediti da se vrednost polja 'email' prenese u login formu
+Kraj casa
+8. Napraviti logout funkcionalnost na ruti "/users/logout". Nakon logout-a potrebno je redirektovati korisnika na login stranicu
+9. UsersController - privilegije i prava pristupa
+    a) Zastititi UsersController "auth" middleware-om, ali izuzeti "login" akciju
+    Objasnjenje: ovo znaci da samo ulogovani korisnik moze pristupiti ovom kontroleru, osim "login" akcije koja sluzi kako bi "gost"
+    tj. ne ulogovani korisnik mogao da pristupii uloguje se
+    b) Zastititi UsersController "guest" middleware-om, ali jedino "login" akciju
+    Objasnjenje: ovo znaci da je korisnik ulogovan moze i pokusa da pristupi "login" akciji, sto nema smisla jer
+    je vec ulogovan, redirektovati ga na welcome stranicu
+10. Napraviti unos novog korisnika. Funkcionalnost je sledeca:
+    a) get zahtev - prikazuje formu koja ima sledeca polja: name, email, address, phone, role, password i confirm password. Polje role
+    moze imati sledece vrednosti: administrator i moderator
+    b) post zahtev - prihvata podatke iz forme, validira i snima u tabelu users. Validaciju prilagoditi tasku 6 i tipovima 
+    podataka (kolona) u users tabeli. Nakon unosa korisnika potrebno je redirektovati korisnika na rutu "/users". 
+    Akciji create moze pristupiti samo ulogovani korisnik
+pauza
+11. Napraviti listanje svih korisnika na url-u (ruti): "/users". Za listanje korisnika koristiti datatable plugin. Ovu rutu 
+(samo get metod) obradjuje UsersController i akcija list
+Kraj casa
+12. Napraviti funkcionalnost izmena podataka jednog korisnika. Ova funkcionalnost se nalazi na ruti "/users/edit/{user}". Korisnik ne moze da 
+da izmeni postojeci email korisnika. Do ove rute se dolazi klikom na link koji se nalazi na ruti "/users". Nakon uspesne izmene 
+podataka potrebno je uraditi redirect na "/users"
+13. Napraviti funkcionalnost brisanje korisnika. Ova funkcionalnost se nalazi na ruti "/users/delete/{user}". Do ove rute se dolazi klikom 
+na link koji se nalazi na ruti "/users".  Nakon uspesne izmene podataka potrebno je uraditi redirect na "/users". Brisanje korisnika
+uraditi kao "soft delete". Ovo znaci da je potrebna jos jedna migracija koja dodaje polje 'deleted' koje je integer, not null i default 0. 
+Ako jedan korisnik ima vrednost za ovo polje = 0 to znaci da nije obrisan, a ako ima vrednost 1 to znaci da je obrisan. Takodje je 
+potrebno dodati i polje 'deleted_by_user_id' koje je integer, NULL i koje belezi ko je obrisao korisnika.  Sada je 
+potrebno doraditi "/users" tako da se izlistavaju samo aktivni korisnici. Za ovo napraviti metodu scopeActive() u modelu i nju koristiti
+pauza
+Pauza
+14. Doraditi notifikacije:
+    a) nakon uspesnog unosa novog korisnika na listi svih prikazati obavestenje da je korisnik uspesno unesen
+    b) nakon uspesne izmene korisnika na listi svih prikazati obavestenje da je korisnik uspesno izmenjen
+    c) nakon brisanja korisnika prikazati poruku da je korisnik uspesno obrisan
+    d) ako moderator pokusa neku nedozvoljenu akciju potrebno je to prikazati nakon redirekcije
+    e) nakon logout-a treba prikazati poruku na login stranici da je logout bio uspesan ili dovidjenja dodjite nam opet "Thank you!!! Come again!!!"
+Kraj casa
+15. Doraditi moderator rolu. Moderator se moze izlogovati i ulogovati. Moderator moze izmeniti samo svoje podatke. Ukoliko pokusa 
+to da uradi sa tudjim profilom treba ga izlogovati i to upisati u log na serveru. 
+16. Change password - ova funkcionalnost je dozvoljena samo ulogovanom korisniku i to adminu, dok moderator moze promeniti
+samo svoj password. Nakon promena password-a administratora treba redirektovati na stranicu sa svim korisnicima, dok moderatora treba 
+ostaviti na istoj stranici, pri cemu treba prikazati poruku da je password uspesno izmenjen i ne treba prikazati formu. Moderator 
+moze izmeniti samo svoju lozinku. Ukoliko pokusa to da uradi sa tudjom treba ga izlogovati i to upisati u log na serveru. 
+17. Password recovery - ova funkcionalnost je dostupna samo neulogovanom korisniku. Ako pokusa da pristupi ulogovani korisnik redirektovati ga
+na stranicu za promenu lozinke, a ako pokusa da pristupi ne ulogovani korisnik prikazati formu sa poljima: email i recaptcha. Ukoliko 
+nije pronadjen korisnik sa unesenim emailom ispisati poruku, a ukoliko je pronadjen poslati email korisniku. U emailu je potrebno podesiti 
+url za izmenu lozinke. Ovaj url sadrzi "token" sa kojim korisnik moze pristupiti promeni lozinke. Klikom na dati url proverava se token i ako je
+vazeci korisniku se prikazuje forma za izmenu lozinke. Nakon izmene lozinke uraditi redirect na login stranicu i prikazati poruku da je
+lozinka uspesno izmenjena. NAPOMENA: kreirati novi projekat, pokrenuti php artisan make:auth i prouciti kako funkcionise ova opcija
