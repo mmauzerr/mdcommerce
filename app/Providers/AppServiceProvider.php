@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use App\Model\Menu;
+use App\Model\Products\Product;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,10 @@ class AppServiceProvider extends ServiceProvider
             
             $menusFooter = Menu::withParent(0)->visible()->position('footer')->orderBy('priority', 'asc')->get();
             view()->share('menusFooter', $menusFooter);
+            
+            $imagesFooters = Product::limit(9)->orderBy('id','desc')->get();
+            view()->share('imagesFooters', $imagesFooters);
+            
         });
     }
 

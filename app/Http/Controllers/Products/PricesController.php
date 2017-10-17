@@ -30,6 +30,7 @@ class PricesController extends Controller {
         
         
         
+        
         $categoriesPossibleValues = "";
         if (count($categories) > 0) {
             $i = 0;
@@ -71,10 +72,15 @@ class PricesController extends Controller {
             $this->validate(request(), [
                 'category_id' => "required|in:$categoriesPossibleValues",
                 'product_id' => "required|in:$productsPossibleValues",              
-                'price' => 'required|integer|min:0',
-                'discount' => 'integer|min:0|max:100'
+                'price' => 'required|integer|min:0'
+                
             ]);
 
+            if(!empty(request('discount'))){
+                 $this->validate(request(), [
+                'discount' => 'numeric|min:0|max:100'
+                      ]);
+            }
             $dimension2 = request('category_id');
             $typeValue = NULL;
             switch ($dimension2) {
@@ -107,7 +113,7 @@ class PricesController extends Controller {
             return redirect()->route('products-prices-list');
         }
 
-        return view('products.prices.create', compact('categories', 'products', 'dimensions'));
+        return view('products.prices.create', compact('categories', 'products', 'dimensions2'));
     }
     
      function edit(Price $price) {
@@ -159,10 +165,16 @@ class PricesController extends Controller {
             $this->validate(request(), [
                 'category_id' => "required|in:$categoriesPossibleValues",
                 'product_id' => "required|in:$productsPossibleValues",              
-                'price' => 'required|integer|min:0',
-                'discount' => 'integer|min:0|max:100'
+                'price' => 'required|integer|min:0'
+                
             ]);
-
+            
+            if(!empty(request('discount'))){
+                 $this->validate(request(), [
+                'discount' => 'numeric|min:0|max:100'
+                      ]);
+            }
+            
             $dimension2 = request('category_id');
             $typeValue = NULL;
             switch ($dimension2) {

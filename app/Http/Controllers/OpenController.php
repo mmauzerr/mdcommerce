@@ -9,6 +9,7 @@ use App\Mail\ContactForm;
 use App\Model\Products\Category;
 use App\Model\Products\Product;
 use App\Model\Products\Dimension;
+use App\Model\Products\Price;
 
 class OpenController extends Controller {
 
@@ -50,33 +51,41 @@ class OpenController extends Controller {
     }
 
     public function product(Product $product) {
-       
-        $dimensions = Dimension::all();
-        $mattresses = Product::where('category_id',1)->get();
-       
+
+
+        $mattresses = Product::where('category_id', 1)->get();
+        $prices = Price::all();
+
         switch ($product->category_id) {
             case 1:
-                if($product->category_id == 1){
-                   
-                  return view('open.mattress', compact('product','dimensions','mattresses'));  
-                }
                 
+                
+                if ($product->category_id == 1) {
+                    $dimensions = Dimension::all();
+                    $dimensionsFilter = $product->dimension_id;
+                    $dimensionsFilter = str_replace("#", "", $dimensionsFilter);
+                    $dimensionsFilter = explode(",", $dimensionsFilter);
+                    
+                    
+                    
+                    return view('open.mattress', compact('product', 'dimensions', 'mattresses','dimensionsFilter','prices'));
+                }
+
 
                 break;
             case 2:
-                if($product->category_id == 2){
-                  return view('open.upholstery', compact('product'));  
+                if ($product->category_id == 2) {
+                    return view('open.upholstery', compact('product'));
                 }
 
                 break;
             case 3:
 
-                if($product->category_id == 3){
-                  return view('open.sponges', compact('product'));  
+                if ($product->category_id == 3) {
+                    return view('open.sponges', compact('product'));
                 }
                 break;
         }
-        
     }
 
 }

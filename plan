@@ -7,7 +7,47 @@
 7.edit - kada menjas proizvod da ne mozes da mu promenis kategoriju,ali on proistice iz zadatka broj 6
 
 
+1.Header
+2.Footer
+3.Logo
+
+
+Products:
+1.srediti u crud dimenzije slika
+
+
 Duseci
-Single
+Products
+1.Sortiranje-group by
+2.sortiranje da se udalji od navigacije
+3.dimenzije
+
+
+Single dusk
 1.izbaciti dimenzije za dusek samo koji ima cenu
+2.products details
+3.duseci filteri(tip,cena,dimenzija)
+4.srediti sliku
+5.slicni duseci
+6.dimenije
+7.kategorije
+
+Single mebl
+1.izbaciti dimenzije za dusek samo koji ima cenu
+2.products details
+3.duseci filteri(tip,cena,dimenzija)
+4.srediti sliku
+5.slicni duseci
+6.dimenije
+7.kategorije
+
+Single sundjer
+
+1.izbaciti dimenzije za dusek samo koji ima cenu
+2.products details
+3.duseci filteri(tip,cena,dimenzija)
+4.srediti sliku
+5.slicni duseci
+6.dimenije
+7.kategorije
 

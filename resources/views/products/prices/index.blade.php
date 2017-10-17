@@ -46,7 +46,7 @@
 
 
                         <td>{{$price->product_id}}</td>
-                        <td>{{$price->dimension_id}}</td>
+                        <td>{{$price->id}}</td>
                         <td>{{$price->price}}</td>
                         <td>{{$price->discount}}</td>
                         <td class="text-right">

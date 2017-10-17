@@ -7,11 +7,11 @@
                 <div class="col-md-3">
                     <div class="c-container c-first">
                         <div class="c-content-title-1">
-                            <h3 class="c-font-uppercase c-font-bold c-font-white">JAN
-                                <span class="c-theme-font">GO</span>
+                            <h3 class="c-font-uppercase c-font-bold c-font-white">
+                                <span class="c-theme-font">Meni</span>
                             </h3>
                             <div class="c-line-left hide"></div>
-                            <p class="c-text"> Lorem ipsum dolor sit amet, consectetuer adipiscing elit, s ed elit diam nonummy ad minim veniam quis nostrud exerci et tation diam.</p>
+                            <p class="c-text"> </p>
                         </div>
                         @if(count($menusFooter) > 0)
                         <ul class="c-links">
@@ -27,30 +27,30 @@
                 <div class="col-md-3">
                     <div class="c-container">
                         <div class="c-content-title-1">
-                            <h3 class="c-font-uppercase c-font-bold c-font-white">Latest Posts</h3>
+                            <h3 class="c-font-uppercase c-font-bold c-font-white">Poslednje novosti</h3>
                             <div class="c-line-left hide"></div>
                         </div>
                         <div class="c-blog">
                             <div class="c-post">
                                 <div class="c-post-img">
-                                    <img src="/jango/assets/base/img/content/stock/9.jpg" alt="" class="img-responsive" />
+                                    <img src="/uploads/products/categories/mebl-kategorija-test-s.jpg" alt="" class="img-responsive" />
                                 </div>
                                 <div class="c-post-content">
                                     <h4 class="c-post-title">
-                                        <a href="#">Ready to Launch</a>
+                                        <a href="/proizvodi/2/mebl">Novi dizajn mebla</a>
                                     </h4>
-                                    <p class="c-text">Lorem ipsum dolor sit amet ipsum sit, consectetuer adipiscing elit sit amet</p>
+                                    <p class="c-text">Najnoviji dizajni italijanskih mebla</p>
                                 </div>
                             </div>
                             <div class="c-post c-last">
                                 <div class="c-post-img">
-                                    <img src="/jango/assets/base/img/content/stock/14.jpg" alt="" class="img-responsive" />
+                                    <img src="/uploads/products/categories/dusek-kategorija-test-s.jpg" alt="" class="img-responsive" />
                                 </div>
                                 <div class="c-post-content">
                                     <h4 class="c-post-title">
-                                        <a href="#">Dedicated Support</a>
+                                        <a href="/proizvodi/2/duseci">Duseci svih dimenzija</a>
                                     </h4>
-                                    <p class="c-text">Lorem ipsum dolor ipsum sit ipsum amet, consectetuer sit adipiscing elit ipsum elit elit ipsum elit</p>
+                                    <p class="c-text">Izdvajamo veliki izbor duseka</p>
                                 </div>
                             </div>
                             <a href="#" class="btn btn-md c-btn-border-1x c-theme-btn c-btn-uppercase c-btn-square c-btn-bold c-read-more hide">Read More</a>
@@ -60,69 +60,33 @@
                 <div class="col-md-3">
                     <div class="c-container">
                         <div class="c-content-title-1">
-                            <h3 class="c-font-uppercase c-font-bold c-font-white">Latest Works</h3>
+                            <h3 class="c-font-uppercase c-font-bold c-font-white">Najprodavniji duseci</h3>
                             <div class="c-line-left hide"></div>
                         </div>
-                        <ul class="c-works">
-                            <li class="c-first">
-                                <a href="#">
-                                    <img src="/jango/assets/base/img/content/stock/015.jpg" alt="" class="img-responsive" />
+                        @if(count($imagesFooters)>0)
+                         
+                         <ul class="c-works">                          
+                            @foreach($imagesFooters as $imageFooter)  
+                            <!--kada je prva slila ide c-first,druga nista,poslednja c-last,i idu 3 ul-->
+                            <li class=" c-first ">
+                                <a href="/proizvod/{{$imageFooter->id}}">
+                                    <img src="{{$imageFooter->image}}" alt="" class="img-responsive" style="height: 64px;width: 64px" />
                                 </a>
                             </li>
-                            <li>
-                                <a href="#">
-                                    <img src="/jango/assets/base/img/content/stock/012.jpg" class="img-responsive" alt="" />
-                                </a>
-                            </li>
-                            <li class="c-last">
-                                <a href="#">
-                                    <img src="/jango/assets/base/img/content/stock/12.jpg" alt="" class="img-responsive" />
-                                </a>
-                            </li>
+                            @endforeach
+                           
                         </ul>
-                        <ul class="c-works">
-                            <li class="c-first">
-                                <a href="#">
-                                    <img src="/jango/assets/base/img/content/stock/014.jpg" class="img-responsive" alt="" />
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="/jango/assets/base/img/content/stock/011.jpg" class="img-responsive" alt="" />
-                                </a>
-                            </li>
-                            <li class="c-last">
-                                <a href="#">
-                                    <img src="/jango/assets/base/img/content/stock/15.jpg" class="img-responsive" alt="" />
-                                </a>
-                            </li>
-                        </ul>
-                        <ul class="c-works">
-                            <li class="c-first">
-                                <a href="#">
-                                    <img src="/jango/assets/base/img/content/stock/015.jpg" class="img-responsive" alt="" />
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="/jango/assets/base/img/content/stock/013.jpg" class="img-responsive" alt="" />
-                                </a>
-                            </li>
-                            <li class="c-last">
-                                <a href="#">
-                                    <img src="/jango/assets/base/img/content/stock/13.jpg" class="img-responsive" alt="" />
-                                </a>
-                            </li>
-                        </ul>
+                        
+                       @endif
                         <a href="#" class="btn btn-md c-btn-border-1x c-theme-btn c-btn-uppercase c-btn-square c-btn-bold c-read-more hide">View More</a>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="c-container c-last">
                         <div class="c-content-title-1">
-                            <h3 class="c-font-uppercase c-font-bold c-font-white">Find us</h3>
+                            <h3 class="c-font-uppercase c-font-bold c-font-white">Kontakt</h3>
                             <div class="c-line-left hide"></div>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed elit diam nonummy ad minim.</p>
+                            <p>Za sve informacije možete nas kontaktirati putem telefona, emaila ili putem drustvenih mreza</p>
                         </div>
                         <ul class="c-socials">
                             <li>
@@ -148,11 +112,13 @@
                         </ul>
                         <ul class="c-address">
                             <li>
-                                <i class="icon-pointer c-theme-font"></i> One Boulevard, Beverly Hills</li>
+                                <i class="icon-pointer c-theme-font"></i> Zage Malivuk 4. ulica broj 6 ( Krnjaca )</li>
                             <li>
-                                <i class="icon-call-end c-theme-font"></i> +1800 1234 5678</li>
+                                <i class="icon-call-end c-theme-font"></i> 011/331-9328 </li>
+                             <li>
+                                <i class="icon-call-end c-theme-font"></i> 060/331-9377 </li>
                             <li>
-                                <i class="icon-envelope c-theme-font"></i> email@example.com</li>
+                                <i class="icon-envelope c-theme-font"></i> office@mdcommerce.rs</li>
                         </ul>
                     </div>
                 </div>
@@ -163,7 +129,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-sm-12 c-col">
-                    <p class="c-copyright c-font-grey">2015 &copy; JANGO
+                    <p class="c-copyright c-font-grey">2017 &copy; MD-Commerce
                         <span class="c-font-grey-3">All Rights Reserved.</span>
                     </p>
                 </div>

@@ -28,7 +28,7 @@
                                 <option value="0">-- Choose category --</option>
                                 @if(count($categories) > 0)
                                 @foreach($categories as $category)
-                                <option value="{{ $category->id }}" @if(old('category_id') == $category->id) selected @endif>{{ $category->name }}</option>
+                                <option value="{{ $category->id }}" @if(old('category_id',$product->category_id) == $category->id) selected @endif>{{ $category->name }}</option>
 
                                 @endforeach
                                 @endif
@@ -42,7 +42,7 @@
                         
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label>* Title: </label>
-                            <input class="form-control" type="text" name="name" value="{{ old('name') }}">
+                            <input class="form-control" type="text" name="name" value="{{ old('name',$product->name) }}">
                             @if ($errors->has('name'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('name') }}</strong>
@@ -52,7 +52,7 @@
 
                         <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
                             <label>Description: </label>
-                            <textarea class="form-control" rows="3" name="description">{{ old('description') }}</textarea>
+                            <textarea class="form-control" rows="3" name="description">{{ old('description',$product->description) }}</textarea>
                             @if ($errors->has('description'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('description') }}</strong>
@@ -62,7 +62,7 @@
                         
                         <div class="form-group{{ $errors->has('text') ? ' has-error' : '' }}">
                             <label>* Text: </label>
-                            <textarea class="form-control" rows="3" name="text"  id="text">{{ old('text') }}</textarea>
+                            <textarea class="form-control" rows="3" name="text"  id="text">{{ old('text',$product->text) }}</textarea>
                             @if ($errors->has('text'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('text') }}</strong>
@@ -82,11 +82,13 @@
                        
                         
                         <div class="dimension form-group{{ $errors->has('type') ? ' has-error' : '' }}"
-                            <label>* Choose type</label>
+                             
+                            <label>* Choose type </label>
                             <select class="form-control" name="type" >
+                                
                                 <option value="0">-- Choose type --</option>
-                                <option value="net">Box zicano jezgro</option>
-                                <option value="foam">Poliuretanska pena</option>
+                                <option value="net"@if(old('type',$product->type) == "net") selected @endif >Box zicano jezgro</option>
+                                <option value="foam"@if(old('type',$product->type) == "foam") selected @endif >Poliuretanska pena</option>
                             </select>
                             @if ($errors->has('type'))
                             <span class="help-block">
@@ -101,7 +103,7 @@
                                 <option value="0">-- Choose height --</option>
                                 @if(count($heights) > 0)
                                 @foreach($heights as $height)
-                                <option value="{{ $height->id }}" @if(old('height_id') == $height->id) selected @endif>{{ $height->name }}</option>
+                                <option value="{{ $height->id }}" @if(old('height_id',$product->height_id) == $height->id) selected @endif>{{ $height->name }}</option>
 
                                 @endforeach
                                 @endif
@@ -113,13 +115,20 @@
                             @endif
                         </div>
                         
+                         <?php
+                            $currentPositions = $product->dimension_id;
+                            // delete #
+                            $currentPositions = str_replace("#", "", $currentPositions);
+                            // make array from string
+                            $currentPositions = explode(",", $currentPositions);
+                        ?>
                         <div  class="dimension height form-group{{ ($errors->has('dimension_id') || $errors->has('dimension_id.*')) ? ' has-error' : '' }}" >
                             <label>* Show on dimensions</label>
                             @if(count($dimensions)>0)
                             @foreach($dimensions as $dimension)
                             <div class="checkbox">
                                 <label>
-                                    <input name="dimension_id[]" type="checkbox" value="{{$dimension->id}}" >{{$dimension->height}}x{{$dimension->width}}
+                                    <input name="dimension_id[]" type="checkbox" value="{{$dimension->id}}" @if(!empty(old('dimension_id', $currentPositions)) && in_array($dimension->id, old('dimension_id', $currentPositions))) checked @endif>{{$dimension->height}}x{{$dimension->width}}
                                 </label>
                             </div>
                             @endforeach

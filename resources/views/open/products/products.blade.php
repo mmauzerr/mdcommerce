@@ -19,31 +19,44 @@
             <div class="c-content-box c-size-md">
                 <div class="container">
                     <div id="filters-container" class="cbp-l-filters-text">
-                        <div class="cbp-l-filters-text-sort">Sort by:</div>
-                        <div data-filter="*" class="cbp-filter-item-active cbp-filter-item"> All
+                        <div class="cbp-l-filters-text-sort">Sortriraj po:</div>
+                        <div data-filter="*" class="cbp-filter-item-active cbp-filter-item"> Svi
                             <div class="cbp-filter-counter"></div>
                         </div> /
-                        <div data-filter=".identity" class="cbp-filter-item"> Identity
+                        <div data-filter=".height" class="cbp-filter-item"> Visini
                             <div class="cbp-filter-counter"></div>
                         </div> /
-                        <div data-filter=".web-design" class="cbp-filter-item"> Web Design
+                        <div data-filter=".type" class="cbp-filter-item"> Tipu(pena ili feder)
                             <div class="cbp-filter-counter"></div>
                         </div> /
                         <div data-filter=".graphic" class="cbp-filter-item"> Graphic
                             <div class="cbp-filter-counter"></div>
                         </div> /
-                        <div data-filter=".logos" class="cbp-filter-item"> Logo
+                        <div data-filter=".price" class="cbp-filter-item"> Ceni
                             <div class="cbp-filter-counter"></div>
                         </div>
                     </div>
-                    <div id="grid-container" class="cbp cbp-l-grid-agency">
+                    <div id="grid-container" class="cbp cbp-l-grid-agency" >
                         @if(count($products) > 0)
                         @foreach($products as $product)                      
-                        <div class="cbp-item graphic">
+                        <div class="cbp-item graphic"  >
                             <a href="{{route('product',$product->id)}}">
-                                <div class="cbp-caption">
+                                <div class="cbp-caption ">
                                     <div class="cbp-caption-defaultWrap">
-                                        <img src="{{$product->image}}" alt=""> </div>
+                                        
+                                        <?php 
+                                        if(isset($product->image)){
+                                            $extension = pathinfo($product->image, PATHINFO_EXTENSION); 
+                                            $extension = substr($product->image, -(strlen($extension) + 1));
+                                            $image = str_replace($extension, "-l" . $extension, $product->image);
+                                            
+                                            ?>
+                                        <img src="{{ $image }}" alt="{{$product->title}}" >
+                                            <?php
+                                        }
+                                            
+                                        ?>  
+                                        </div>
                                 </div>
                                 <div class="cbp-l-grid-agency-title">{{$product->name}}</div>
                                 <div class="cbp-l-grid-agency-desc">{{$product->description}}</div>
@@ -68,5 +81,6 @@
 
 @section('custom-js')
     <script src="/jango/assets/base/js/scripts/pages/index-gallery.js" type="text/javascript"></script>
+     
 @endsection
 
