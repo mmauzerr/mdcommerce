@@ -14,11 +14,11 @@ class UsersTableSeeder extends Seeder
     {
       
         DB::table('users')->insert([
-            'name' => 'Goran Loncar',
-            'email' => 'goranbloncar@gmail.com',
-            'password' => bcrypt('nikola'),
-            'address' => 'Vojvode Stepe, Beograd',
-            'phone' => '0641924059',
+            'name' => 'mdcommerce',
+            'email' => 'mdcommerce@gmail.com',
+            'password' => bcrypt('mdcommerce'),
+            'address' => '',
+            'phone' => '',
             'role' => 'administrator'
         ]);
     }
